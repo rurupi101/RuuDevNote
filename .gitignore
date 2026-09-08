@@ -5,6 +5,9 @@ dist/
 
 # dependencies
 node_modules/
+dist/
+.astro/
+.obsidian/
 
 # logs
 npm-debug.log*
@@ -22,3 +25,4 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
