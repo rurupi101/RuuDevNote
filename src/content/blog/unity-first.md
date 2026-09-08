@@ -2,6 +2,11 @@
 title: '첫번째 글 작성하기'
 description: '이게 뭔데?'
 pubDate: 'sep 08 2026'
+tags:
+  - Astro
+  - Web
+  - Blog
+heroImage: '../../assets/blog-placeholder-3.jpg'
 ---
 ## 시작
 

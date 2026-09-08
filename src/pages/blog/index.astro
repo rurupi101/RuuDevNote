@@ -1,114 +1,83 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import PostCard from '../../components/PostCard.astro';
+import PostList from '../../components/PostList.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+
+import '../../styles/global.css';
+import '../../styles/blog.css';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const featuredPost = posts[0];
+const otherPosts = posts.slice(1);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
+		<BaseHead
+			title="Blog | RuuDevNote"
+			description="RuuDevNote의 개발 블로그"
+		/>
 	</head>
+
 	<body>
 		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+
+		<main class="blog-page">
+			<section class="blog-heading">
+				<p class="eyebrow">BLOG</p>
+
+				<h1>개발 기록</h1>
+
+				<p>
+					개발하면서 배우고 경험한 것들을<br />
+					하나씩 기록하고 있습니다.
+				</p>
+
+				<div class="blog-stats">
+					<div>
+						<strong>{posts.length}</strong>
+						<span>Posts</span>
+					</div>
+
+					<div>
+						<strong>2026</strong>
+						<span>Started</span>
+					</div>
+				</div>
 			</section>
+
+			{featuredPost && (
+				<section class="featured-section">
+					<SectionTitle
+						title="Featured"
+						description="가장 최근에 작성한 글입니다."
+					/>
+
+					<PostCard post={featuredPost} featured />
+				</section>
+			)}
+
+			{otherPosts.length > 0 && (
+				<section class="archive-section">
+					<SectionTitle
+						title="All posts"
+						description="전체 글 목록입니다."
+					/>
+
+					<PostList posts={otherPosts} />
+				</section>
+			)}
 		</main>
+
 		<Footer />
 	</body>
 </html>
