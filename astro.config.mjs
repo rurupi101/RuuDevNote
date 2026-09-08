@@ -7,6 +7,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://rurupi101.github.io/RuuDevNote/',
+	base: '/RuuDevNote',
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
