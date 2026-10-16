@@ -13,4 +13,4 @@ heroImage: '../../assets/blog-placeholder-3.jpg'
 작성이 되고 있는겨?
 
 
-![](../../../Pasted%20image%2020260908163043.png)
+![](../../images/Pasted%20image%2020260908163043.png)
